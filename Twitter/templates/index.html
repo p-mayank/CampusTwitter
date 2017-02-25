@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block dashactive %}active{% endblock %}
+{% block body %}
+<div class="row">
+<div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-twitter" style="font-size: 1.5em;color: skyblue"></i>
+          <div style="padding-left: 10px">
+          New Tweet:</div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+  <div class="col-md-6">
+  <form method="POST" action="{% url 'Twitter:main' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <span class="text-danger small">{{ field.errors }}</span>
+        </div>
+        <label class="control-label col-md-2" for="song_title">{{ field.label_tag }}</label>
+        <div class="col-md-10">{{ field }}</div>
+    </div>
+      {% endfor %}
+    <button class="btn btn-success">Tweet</button>
+    </form>
+  </div>
+</div>
+        </div>
+      </div>
+    </div>
+    </div>
+<div class="row">
+<div class="col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="card-header">
+          Recent Tweets
+          <div class="col-sm-offset-9">
+          <a href="./messaging.html"><strong>View All..:</strong></a>
+          </div>
+        </div>
+        <div class="card-body">
+            {% for tweets in all_tweets %}
+          <div class="media social-post">
+  <div class="media-left">
+    <a href="#">
+      <img src="../media/{{ tweets.tweetfrom.profile_picture }}">
+    </a>
+  </div>
+  <div class="media-body">
+    <div class="media-heading">
+      <h4 class="title">{{ tweets.tweetfrom }}</h4>
+      <h5 class="timeing">20 mins ago</h5>
+    </div>
+    <div class="media-content">{{tweets.text}}</div>
+    <div class="media-content">Tags:{% for tweetto in tweets.tweetto.all %}
+    <a href="">#{{ tweetto }}</a>
+    {% endfor %}</div>
+    <div class="media-action">
+      <a href="{% url 'Twitter:addcomment' tweets.id %}"><button class="btn btn-link"><i class="fa fa-comments-o"></i> Comments:</button></a>
+    </div>
+  {% for comments in comment %}
+    {% if comments.commenton == tweets  %}
+
+    <div class="media-left">
+    <a href="#">
+      <img src="../media/{{ comments.commentfrom.profile_picture }}">
+    </a>
+    </div>
+    <div class="media-body">
+      <div class="media-heading">
+      <h4 class="title" style="font-size: 15px;">{{ comments.commentfrom }}</h4>
+      <h5 class="timeing">20 mins ago</h5>
+    </div>
+    <div class="media-content">{{ comments.ctext }}</div>
+    </div>
+      {% endif %}
+      {% endfor %}
+    <div class="media-comment">
+    <div>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+      Add Comment
+      </button>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Type in your Comment:</h4>
+          </div>
+          <div class="modal-body">
+            <iframe src="" width="100%"></iframe>
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-sm btn-success">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+
+</div>
+<div class="row">
+  <div class="col-lg-4 col-lg-offset-2 col-md-6 col-sm-6 col-xs-12">
+      <a class="card card-banner card-blue-light">
+  <div class="card-body">
+    <i class="icon fa fa-thumbs-o-up fa-4x" style="font-size: 2.5em"></i>
+    <div class="content">
+      <div class="title">Page Hits</div>
+      <div class="value" style="font-size: 2em"><span class="sign"></span>2453</div>
+    </div>
+  </div>
+</a>
+
+  </div>
+  <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <a class="card card-banner card-yellow-light">
+  <div class="card-body">
+    <i class="icon fa fa-user-plus fa-4x" style="font-size: 2.5em"></i>
+    <div class="content">
+      <div class="title">New Registration</div>
+      <div class="value" style="font-size: 2em"><span class="sign"></span>50</div>
+    </div>
+  </div>
+</a>
+
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

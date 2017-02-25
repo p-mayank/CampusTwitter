@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CampusTwitter</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load staticfiles %}
+
+  <link rel="stylesheet" type="text/css" href="{% static 'Twitter/vendor.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'Twitter/flat-admin.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <script>
+  var text=["Keep Tweeting!"];
+  console.log(text[0]);
+  $(document).ready(function(){
+    var i = 0;
+    var n = 14;
+    var k="";
+    function nextFrame() {
+        if(i < n) {
+            console.log(text[0][i]);
+            k+=text[0][i];
+            $('#title').html(k).show();
+            i++;
+            // Continue the loop in 3s
+            setTimeout(nextFrame, 250);
+        }
+        if(i==n){
+          $('#title').append(' &#9829;').show();
+          i+=1;
+        }
+    }
+    setInterval(nextFrame, 1000);
+
+
+  });
+  </script>
+
+</head>
+<body>
+  <div class="app app-default">
+
+<aside class="app-sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <a class="sidebar-brand" href="{% url 'Twitter:main' %}">Campus<span class="highlight">Twitter</span></a>
+    <div id="title" style="text-align: center;font-size: 20px;font-family: Satisfy;color: #c88027;"></div>
+    <button type="button" class="sidebar-toggle">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
+  <div class="sidebar-menu">
+    <ul class="sidebar-nav">
+      <li class="{% block dashactive %}{% endblock %}">
+        <a href="{% url 'Twitter:main' %}">
+          <div class="icon">
+            <i class="fa fa-tasks" aria-hidden="true"></i>
+          </div>
+          <div class="title">Dashboard</div>
+        </a>
+      </li>
+      <li class="{% block msgactive %}{% endblock %}">
+        <a href="{% url 'Twitter:main' %}">
+          <div class="icon">
+            <i class="fa fa-comments" aria-hidden="true"></i>
+          </div>
+          <div class="title">Tweets</div>
+        </a>
+      </li>
+      <li class="{% block profileactive %}{% endblock %}">
+        <a href="./profile.html">
+          <div class="icon">
+            <i class="fa fa-user" aria-hidden="true"></i>
+          </div>
+          <div class="title">User</div>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="sidebar-footer">
+
+  </div>
+</aside>
+
+<script type="text/ng-template" id="sidebar-dropdown.tpl.html">
+  <div class="dropdown-background">
+    <div class="bg"></div>
+  </div>
+  <div class="dropdown-container">
+    {{list}}
+  </div>
+</script>
+<div class="app-container">
+
+  <nav class="navbar navbar-default" id="navbar">
+  <div class="container-fluid">
+    <div class="navbar-collapse collapse in">
+      <ul class="nav navbar-nav navbar-mobile">
+        <li>
+          <button type="button" class="sidebar-toggle">
+            <i class="fa fa-bars"></i>
+          </button>
+        </li>
+        <li class="logo">
+          <a class="navbar-brand" href="{% url 'Twitter:main' %}">Campus<span class="highlight"> Twitter</span></a>
+        </li>
+        <li>
+          <button type="button" class="navbar-toggle">
+            <img class="profile-img" src="../media/{{ user1.profile_picture }}">
+          </button>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-left">
+        <li class="navbar-title">Dashboard</li>
+        <!--
+        <li class="navbar-search hidden-sm">
+          <input id="search" type="text" placeholder="Search..">
+          <button class="btn-search"><i class="fa fa-search"></i></button>
+        </li>-->
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown notification danger">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <div class="icon"><i class="fa fa-bell" aria-hidden="true"></i></div>
+            <div class="title">Notifications</div>
+            <div class="count">2</div>
+          </a>
+          <div class="dropdown-menu">
+            <ul>
+              <li class="dropdown-header">Notification</li>
+              <li>
+                <a href="#">
+                  <span class="badge badge-danger pull-right">1</span>
+                  <div class="message">
+                    <div class="content">
+                      <div class="title">New Tweet</div>
+                      <div class="description"></div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="dropdown profile">
+          <a href="/html/pages/profile.html" class="dropdown-toggle"  data-toggle="dropdown">
+            <img class="profile-img" src="../media/{{ user1.profile_picture }}">
+            <div class="title">Profile</div>
+          </a>
+          <div class="dropdown-menu">
+            <div class="profile-info">
+              <h4 class="username">{{ user1.username }}</h4>
+            </div>
+            <ul class="action">
+              <li>
+                <a href="profile.html">
+                  Profile
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'Twitter:logout' %}">
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="btn-floating" id="help-actions">
+  <div class="btn-bg"></div>
+  <button type="button" class="btn btn-default btn-toggle" data-toggle="toggle" data-target="#help-actions">
+    <i class="icon fa fa-plus"></i>
+    <span class="help-text">Shortcut</span>
+  </button>
+  <div class="toggle-content">
+    <ul class="actions">
+      <li><a href="https://github.com/p-mayank" target="_blank"><i class="fa fa-github" aria-hidden="true"></i>&nbsp;&nbsp;GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/mayank96" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i>&nbsp;&nbsp;LinkedIn</a></li>
+      <li><a href="https://www.facebook.com/pmayank96" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i>&nbsp;&nbsp;Facebook</a></li>
+    </ul>
+  </div>
+</div>
+    {% block body %}
+    
+    {% endblock %}
+
+  <div class="btn-floating" id="help-actions">
+  <div class="btn-bg"></div>
+  <button type="button" class="btn btn-default btn-toggle" data-toggle="toggle" data-target="#help-actions">
+    <i class="icon fa fa-plus"></i>
+    <span class="help-text">Shortcut</span>
+  </button>
+  <div class="toggle-content">
+    <ul class="actions">
+      <li><a href="https://github.com/p-mayank" target="_blank"><i class="fa fa-github" aria-hidden="true"></i>&nbsp;&nbsp;GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/mayank96" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i>&nbsp;&nbsp;LinkedIn</a></li>
+      <li><a href="https://www.facebook.com/pmayank96" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i>&nbsp;&nbsp;Facebook</a></li>
+    </ul>
+  </div>
+</div>
+    <div class="row">
+  </div>
+  <footer class="app-footer">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="footer-copyright">
+        Copyright &#9400 Mayank
+      </div>
+    </div>
+  </div>
+</footer>
+</div>
+
+  </div>
+
+  <script type="text/javascript" src="{% static 'Twitter/JS/vendor.js' %}"></script>
+  <script type="text/javascript" src="{% static 'Twitter/JS/app.js' %}"></script>
+
+</body>
+</html>

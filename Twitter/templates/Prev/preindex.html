@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CampusTwitter</title>
+</head>
+<body>
+<h3>User::{{ user1.username }}<br></h3>
+<p>Country::{{ user1.country }}  </p>
+<img src="{{ user1.profile_picture.url }}" width="50px" height="50px" >
+{% for tweets in all_tweets %}
+<p>Tweet-Text::{{ tweets.text }}</p><br>
+<p>Smiley::{{ tweets.smiley }}</p><br>
+<p>To::{% for tweetto in tweets.tweetto.all %}
+    {{ tweetto }}
+    {% endfor %}</p><br>
+<p>From::{{ tweets.tweetfrom }}</p><br>
+<p>Likes::{{ tweets.like }}</p><br>
+{% for comments in comment %}
+    {% if comments.commenton == tweets  %}
+
+        {{ comments.commentfrom }}
+        {{ comments.ctext }}
+
+    {% endif %}
+    {% endfor %}
+
+    <a href="{% url 'Twitter:addcomment' tweets.id %}"><button type="button">Add Comment</button></a>
+{% endfor %}
+<form method="POST" action="{% url 'Twitter:main' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'Prev/form_template.html' %}
+    <input type="submit">
+</form>
+
+<a href="{% url 'Twitter:logout' %}"><button type="button">Logout</button></a>
+
+</body>
+</html>
+
+....................
+
