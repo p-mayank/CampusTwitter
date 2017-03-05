@@ -25,8 +25,8 @@
             k+=text[0][i];
             $('#title').html(k).show();
             i++;
-            // Continue the loop in 3s
-            setTimeout(nextFrame, 250);
+            // Continue the loop in 0.3s
+            setTimeout(nextFrame, 300);
         }
         if(i==n){
           $('#title').append(' &#9829;').show();
@@ -108,7 +108,7 @@
         </li>
         <li>
           <button type="button" class="navbar-toggle">
-            <img class="profile-img" src="../media/{{ user1.profile_picture }}">
+            <img class="profile-img" src="../../media/{{ user1.profile_picture }}">
           </button>
         </li>
       </ul>
@@ -146,7 +146,7 @@
         </li>
         <li class="dropdown profile">
           <a href="/html/pages/profile.html" class="dropdown-toggle"  data-toggle="dropdown">
-            <img class="profile-img" src="../media/{{ user1.profile_picture }}">
+            <img class="profile-img" src="../../media/{{ user1.profile_picture }}">
             <div class="title">Profile</div>
           </a>
           <div class="dropdown-menu">

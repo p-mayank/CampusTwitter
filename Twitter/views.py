@@ -79,8 +79,8 @@ def register(request):
 
 def user_login(request):
     if request.method == "POST":
-        username = request.POST.get('username', False)
-        password = request.POST.get('password', False)
+        username = request.POST['username']
+        password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:

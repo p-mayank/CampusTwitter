@@ -23,6 +23,7 @@ class tweetadmin(admin.ModelAdmin):
 
 class comment(models.Model):
     ctext = models.CharField(max_length=1000)
-    commenton = models.ForeignKey(tweet)
+    commenton = models.ForeignKey(tweet, on_delete=models.CASCADE)
     commentfrom = models.ForeignKey(useradd, on_delete=models.CASCADE, null=True)
+    timestamp = models.TimeField(auto_now_add=True, blank=True)
 

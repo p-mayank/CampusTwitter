@@ -45,13 +45,13 @@
           <div class="media social-post">
   <div class="media-left">
     <a href="#">
-      <img src="../media/{{ tweets.tweetfrom.profile_picture }}">
+      <img src="../../media/{{ tweets.tweetfrom.profile_picture }}">
     </a>
   </div>
   <div class="media-body">
     <div class="media-heading">
-      <h4 class="title">{{ tweets.tweetfrom }}</h4>
-      <h5 class="timeing">20 mins ago</h5>
+      <h4 class="title" style="font-weight: bold;">{{ tweets.tweetfrom }}</h4>
+      <h5 class="timeing">{{ tweets.timestamp }}</h5>
     </div>
     <div class="media-content">{{tweets.text}}</div>
     <div class="media-content">Tags:{% for tweetto in tweets.tweetto.all %}
@@ -62,18 +62,17 @@
     </div>
   {% for comments in comment %}
     {% if comments.commenton == tweets  %}
-
-    <div class="media-left">
+    <div class="media-left col-md-1">
     <a href="#">
-      <img src="../media/{{ comments.commentfrom.profile_picture }}">
+      <img src="../../media/{{ comments.commentfrom.profile_picture }}">
     </a>
     </div>
     <div class="media-body">
       <div class="media-heading">
-      <h4 class="title" style="font-size: 15px;">{{ comments.commentfrom }}</h4>
-      <h5 class="timeing">20 mins ago</h5>
+      <h4 class="title" style="font-weight: bold;">{{ comments.commentfrom }}</h4>
+      <h5 class="timeing">{{ comments.timestamp }}</h5>
     </div>
-    <div class="media-content">{{ comments.ctext }}</div>
+    <div class="media-content" style="font-size: 13px;">{{ comments.ctext }}</div>
     </div>
       {% endif %}
       {% endfor %}
@@ -91,11 +90,10 @@
             <h4 class="modal-title">Type in your Comment:</h4>
           </div>
           <div class="modal-body">
-            <iframe src="" width="100%"></iframe>
+            <iframe src="{% url 'Twitter:addcomment' tweets.id %}" width="100%"></iframe>
             </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-sm btn-success">Submit</button>
+            <a href="{% url 'Twitter:main' %}"><button type="button" class="btn btn-sm btn-default">Close</button></a>
           </div>
         </div>
       </div>
